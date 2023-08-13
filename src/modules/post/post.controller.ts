@@ -19,13 +19,12 @@ const createPost = async (req: Request, res: Response) => {
 
 const getAllPost = async (req: Request, res: Response) => {
   try {
-    console.log(req.query);
-    const options = req.query;
     const result = await postService.getAllPost(req.query);
     res.status(200).json({
       success: true,
       message: "Posts Retrieve Successful",
-      data: result,
+      total: result.total,
+      data: result.data,
     });
   } catch (error: any) {
     res.status(201).json({
