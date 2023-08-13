@@ -8,8 +8,12 @@ const createPost = async (data: post): Promise<post> => {
 };
 
 const getAllPost = async (options: any): Promise<post[]> => {
-  const { orderBy, sortBy, searchTerm } = options;
+  const { orderBy, sortBy, searchTerm, page, limit } = options;
+  const skip = parseInt(limit) * parseInt(page) - parseInt(limit);
+  const take = parseInt(limit);
   const result = await prisma.post.findMany({
+    skip,
+    take,
     include: {
       author: true,
       category: true,
