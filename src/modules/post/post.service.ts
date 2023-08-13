@@ -85,6 +85,29 @@ const deletePost = async (id: number): Promise<post> => {
   });
   return result;
 };
+const learnAggregateAndGrouping = async () => {
+  //   const result = await prisma.post.aggregate({
+  //     _avg: {
+  //       authorId: true,
+  //       categoryId: true,
+  //     },
+  //     _sum: {
+  //       id: true,
+  //     },
+  //     _count: {
+  //       id: true,
+  //     },
+  //   });
+
+  const result = await prisma.post.groupBy({
+    by: ["title"],
+    _count: {
+      title: true,
+    },
+  });
+
+  return result;
+};
 
 export const postService = {
   createPost,
@@ -92,4 +115,5 @@ export const postService = {
   getSinglePost,
   updatePost,
   deletePost,
+  learnAggregateAndGrouping,
 };
