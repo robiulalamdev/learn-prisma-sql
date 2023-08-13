@@ -33,7 +33,7 @@ model profile {
 model post {
   id         Int      @id @default(autoincrement())
   title      String
-  authorId   Int      @unique
+  authorId   Int
   author     user     @relation(fields: [authorId], references: [id])
   categoryId Int
   category   category @relation(fields: [categoryId], references: [id])
