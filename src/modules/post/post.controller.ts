@@ -19,7 +19,9 @@ const createPost = async (req: Request, res: Response) => {
 
 const getAllPost = async (req: Request, res: Response) => {
   try {
-    const result = await postService.getAllPost();
+    console.log(req.query);
+    const options = req.query;
+    const result = await postService.getAllPost(req.query);
     res.status(200).json({
       success: true,
       message: "Posts Retrieve Successful",

@@ -7,11 +7,36 @@ const createPost = async (data: post): Promise<post> => {
   return result;
 };
 
-const getAllPost = async (): Promise<post[]> => {
+const getAllPost = async (options: any): Promise<post[]> => {
+  const { orderBy, sortBy, searchTerm } = options;
   const result = await prisma.post.findMany({
     include: {
       author: true,
       category: true,
+    },
+    orderBy:
+      orderBy && sortBy
+        ? {
+            [orderBy]: sortBy,
+          }
+        : { createdAt: "desc" },
+    where: {
+      OR: [
+        {
+          title: {
+            contains: searchTerm,
+            mode: "insensitive",
+          },
+        },
+        {
+          author: {
+            name: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+        },
+      ],
     },
   });
   return result;
